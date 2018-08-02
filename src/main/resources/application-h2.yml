@@ -1,0 +1,32 @@
+
+# Spring 数据源 (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:bootexample;MODE=MySQL
+    username: root
+    password: root
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      show_sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect # Hibernate 属性，SQL 方言使得 Hibernate 为所选数据库生成更好的 SQL
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+
+logging.file: logs/api-stack-base.log
+logging:
+  level:
+      org:
+        springframework:
+          web: DEBUG
+        hibernate: ERROR

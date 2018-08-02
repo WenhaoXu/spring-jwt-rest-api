@@ -1,0 +1,97 @@
+package com.tw.apistackbase.domian.todo.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+/**
+ * Created by jxzhong on 2017/7/3.
+ */
+@Entity
+public class Todo {
+
+    @Id
+    private Long id;
+    private String title;
+    private Boolean completed;
+    private Integer order;
+
+    public Todo() {
+    }
+
+    public Todo(String title) {
+        this.title = title;
+    }
+
+    public Todo(String title, Boolean completed) {
+        this.title = title;
+        this.completed = completed;
+    }
+
+    private Todo(Long id, String title, Boolean completed, Integer order) {
+        this.id = id;
+        this.title = title;
+        this.completed = completed;
+        this.order = order;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Todo todo = (Todo) o;
+
+        if (id != todo.id) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean isCompleted() {
+        return nonNull(completed, false);
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public int getOrder() {
+        return nonNull(order, 0);
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
+    public Todo merge(Todo newTodo) {
+        return new Todo(id,
+                nonNull(newTodo.title, title),
+                nonNull(newTodo.completed, completed),
+                nonNull(newTodo.order, order));
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    private <T> T nonNull(T value, T defaultValue) {
+        return value == null ? defaultValue : value;
+    }
+}
